@@ -70,6 +70,7 @@
     <Compile Include="IOPowerSourceState.cs" />
     <Compile Include="IOPowerSourceBatteryHealth.cs" />
     <Compile Include="IOPowerSourceBatteryHealthCondition.cs" />
+    <Compile Include="IOPowerSourcesExternalPowerAdapterDetails.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>

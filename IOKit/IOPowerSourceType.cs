@@ -4,11 +4,14 @@ namespace IOKit
 {
 	public readonly struct IOPowerSourceType : IEquatable<IOPowerSourceType>
 	{
+		private const string kIOPSInternalBatteryType = "InternalBattery";
+		private const string kIOPSUPSType = "UPS";
+
 		private readonly string type;
 
-		public static IOPowerSourceType UPS { get; } = new IOPowerSourceType("UPS");
+		public static IOPowerSourceType UPS { get; } = new IOPowerSourceType(kIOPSUPSType);
 
-		public static IOPowerSourceType InternalBattery { get; } = new IOPowerSourceType("InternalBattery");
+		public static IOPowerSourceType InternalBattery { get; } = new IOPowerSourceType(kIOPSInternalBatteryType);
 
 		IOPowerSourceType(string type)
 		{

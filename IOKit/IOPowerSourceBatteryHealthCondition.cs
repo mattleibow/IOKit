@@ -4,11 +4,14 @@ namespace IOKit
 {
 	public readonly struct IOPowerSourceBatteryHealthCondition : IEquatable<IOPowerSourceBatteryHealthCondition>
 	{
+		private const string kIOPSCheckBatteryValue = "Check Battery";
+		private const string kIOPSPermanentFailureValue = "Permanent Battery Failure";
+
 		private readonly string condition;
 
-		public static IOPowerSourceBatteryHealthCondition CheckBattery { get; } = new IOPowerSourceBatteryHealthCondition("Check Battery");
+		public static IOPowerSourceBatteryHealthCondition CheckBattery { get; } = new IOPowerSourceBatteryHealthCondition(kIOPSCheckBatteryValue);
 
-		public static IOPowerSourceBatteryHealthCondition PermanentBatteryFailure { get; } = new IOPowerSourceBatteryHealthCondition("Permanent Battery Failure");
+		public static IOPowerSourceBatteryHealthCondition PermanentBatteryFailure { get; } = new IOPowerSourceBatteryHealthCondition(kIOPSPermanentFailureValue);
 
 		IOPowerSourceBatteryHealthCondition(string condition)
 		{

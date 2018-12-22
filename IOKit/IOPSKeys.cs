@@ -2,15 +2,6 @@
 {
 	internal static class IOPSKeys
 	{
-		// Power Adapter Keys
-		public const string kIOPSPowerAdapterIDKey = "AdapterID";
-		public const string kIOPSPowerAdapterWattsKey = "Watts";
-		public const string kIOPSPowerAdapterRevisionKey = "AdapterRevision";
-		public const string kIOPSPowerAdapterSerialNumberKey = "SerialNumber";
-		public const string kIOPSPowerAdapterFamilyKey = "FamilyCode";
-		public const string kIOPSPowerAdapterCurrentKey = "Current";
-		public const string kIOPSPowerAdapterSourceKey = "Source";
-
 		// Power Source Commands (UPS)
 		public const string kIOPSCommandDelayedRemovePowerKey = "Delayed Remove Power";
 		public const string kIOPSCommandEnableAudibleAlarmKey = "Enable Audible Alarm";

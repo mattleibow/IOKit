@@ -1,6 +1,6 @@
-﻿using System.Linq;
+﻿using System;
 using CoreFoundation;
-using Foundation;
+using ObjCRuntime;
 
 namespace IOKit
 {
@@ -80,20 +80,44 @@ namespace IOKit
 
 		public int ProductId => dictionary.GetInt32Value(kIOPSProductIDKey);
 
-		// TODO: VendorData              
+		public IntPtr VendorData => dictionary[kIOPSVendorDataKey];
 
 		public IOPowerSourceBatteryHealth BatteryHealth => IOPowerSourceBatteryHealth.Create(dictionary.GetStringValue(kIOPSBatteryHealthKey));
 
 		public IOPowerSourceBatteryHealthCondition BatteryHealthCondition => IOPowerSourceBatteryHealthCondition.Create(dictionary.GetStringValue(kIOPSBatteryHealthConditionKey));
 
-		// TODO: BatteryFailureModes     
-		// TODO: HealthConfidence        
-		// TODO: MaxErr
+		public string[] BatteryFailureModes
+		{
+			get
+			{
+				var modesHandle = dictionary[kIOPSBatteryHealthConditionKey];
+				if (modesHandle == default)
+					return null;
+
+				using (var array = new CFArray(modesHandle, false))
+				{
+					var modes = new string[array.Count];
+					for (var i = 0; i < array.Count; i++)
+					{
+						using (var str = new CFString(array[i]))
+						{
+							modes[i] = str;
+						}
+					}
+					return modes;
+				}
+			}
+		}
+
+		[Deprecated(PlatformName.MacOSX, 10, 6)]
+		public string HealthConfidence => dictionary.GetStringValue(kIOPSHealthConfidenceKey);
+
+		public int PercentageError => dictionary.GetInt32Value(kIOPSMaxErrKey);
 
 		public bool IsCharged => dictionary.GetBooleanValue(kIOPSIsChargedKey);
 
 		public bool IsFinishingCharge => dictionary.GetBooleanValue(kIOPSIsFinishingChargeKey);
 
-		// TODO: HardwareSerialNumber    
+		public string HardwareSerialNumber => dictionary.GetStringValue(kIOPSHardwareSerialNumberKey);
 	}
 }

@@ -4,13 +4,17 @@ namespace IOKit
 {
 	public readonly struct IOPowerSourceState : IEquatable<IOPowerSourceState>
 	{
+		private const string kIOPSOffLineValue = "Off Line";
+		private const string kIOPSACPowerValue = "AC Power";
+		private const string kIOPSBatteryPowerValue = "Battery Power";
+
 		private readonly string state;
 
-		public static IOPowerSourceState OffLine { get; } = new IOPowerSourceState("Off Line");
+		public static IOPowerSourceState OffLine { get; } = new IOPowerSourceState(kIOPSOffLineValue);
 
-		public static IOPowerSourceState ACPower { get; } = new IOPowerSourceState("AC Power");
+		public static IOPowerSourceState ACPower { get; } = new IOPowerSourceState(kIOPSACPowerValue);
 
-		public static IOPowerSourceState BatteryPower { get; } = new IOPowerSourceState("Battery Power");
+		public static IOPowerSourceState BatteryPower { get; } = new IOPowerSourceState(kIOPSBatteryPowerValue);
 
 		IOPowerSourceState(string state)
 		{

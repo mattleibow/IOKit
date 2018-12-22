@@ -4,15 +4,20 @@ namespace IOKit
 {
 	public readonly struct IOPowerSourceTransportType : IEquatable<IOPowerSourceTransportType>
 	{
+		private const string kIOPSSerialTransportType = "Serial";
+		private const string kIOPSUSBTransportType = "USB";
+		private const string kIOPSNetworkTransportType = "Ethernet";
+		private const string kIOPSInternalType = "Internal";
+
 		private readonly string type;
 
-		public static IOPowerSourceTransportType Serial { get; } = new IOPowerSourceTransportType("Serial");
+		public static IOPowerSourceTransportType Serial { get; } = new IOPowerSourceTransportType(kIOPSSerialTransportType);
 
-		public static IOPowerSourceTransportType Usb { get; } = new IOPowerSourceTransportType("USB");
+		public static IOPowerSourceTransportType Usb { get; } = new IOPowerSourceTransportType(kIOPSUSBTransportType);
 
-		public static IOPowerSourceTransportType Ethernet { get; } = new IOPowerSourceTransportType("Ethernet");
+		public static IOPowerSourceTransportType Ethernet { get; } = new IOPowerSourceTransportType(kIOPSNetworkTransportType);
 
-		public static IOPowerSourceTransportType Internal { get; } = new IOPowerSourceTransportType("Internal");
+		public static IOPowerSourceTransportType Internal { get; } = new IOPowerSourceTransportType(kIOPSInternalType);
 
 		IOPowerSourceTransportType(string type)
 		{

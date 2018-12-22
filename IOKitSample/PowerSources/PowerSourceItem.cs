@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -40,15 +41,20 @@ namespace IOKitSample
 		{
 			try
 			{
-				return prop.GetValue(instance)?.ToString();
+				var value = prop.GetValue(instance);
+				if (value is string str)
+					return str;
+				if (value is IEnumerable enumerable)
+					return "[" + string.Join(", ", enumerable.Cast<object>()) + "]";
+				return value?.ToString() ?? " ";
 			}
-			catch (Exception ex) when (ex.InnerException != null)
+			catch (Exception ex) when (ex is KeyNotFoundException || ex.InnerException is KeyNotFoundException)
 			{
-				return $"(error: {ex.InnerException.Message})";
+				return " ";
 			}
 			catch (Exception ex)
 			{
-				return $"(error: {ex.Message})";
+				return $"(error: {(ex.InnerException ?? ex).Message})";
 			}
 		}
 	}

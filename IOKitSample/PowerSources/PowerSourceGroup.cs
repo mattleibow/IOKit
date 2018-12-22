@@ -9,10 +9,25 @@ namespace IOKitSample
 		public PowerSourceGroup(IOPowerSourcesInfo powerSourcesInfo)
 			: base("System")
 		{
-			Items = new List<PowerSourceItem>
+			if (powerSourcesInfo != null)
 			{
-				new SystemPowerSourceItem (powerSourcesInfo)
-			};
+				Items = new List<PowerSourceItem>
+				{
+					new SystemPowerSourceItem(powerSourcesInfo)
+				};
+			}
+		}
+
+		public PowerSourceGroup(IOPowerSourcesExternalPowerAdapterDetails adapterDetails)
+			: base("External Adapters")
+		{
+			if (adapterDetails != null)
+			{
+				Items = new List<PowerSourceItem>
+				{
+					new AdaptersPowerSourceItem(adapterDetails)
+				};
+			}
 		}
 
 		public PowerSourceGroup(IEnumerable<IOPowerSource> powerSources)

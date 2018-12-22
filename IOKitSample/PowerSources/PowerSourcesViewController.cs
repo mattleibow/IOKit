@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using AppKit;
-using CoreText;
+using CoreFoundation;
 using Foundation;
 using IOKit;
 
@@ -10,6 +10,8 @@ namespace IOKitSample
 	public partial class PowerSourcesViewController : NSViewController, INSOutlineViewDelegate, INSOutlineViewDataSource, INSTableViewDataSource, INSTableViewDelegate
 	{
 		private IOPowerSourcesInfo powerSourcesInfo;
+		private IOPowerSourcesExternalPowerAdapterDetails adapterDetails;
+		private CFRunLoopSource powerSourceNotification;
 		private readonly List<PowerSourceGroup> data = new List<PowerSourceGroup>();
 		private readonly List<(string Name, string Value)> details = new List<(string, string)>();
 
@@ -22,23 +24,39 @@ namespace IOKitSample
 		{
 			base.ViewDidAppear();
 
+			powerSourceNotification = IOPowerSources.CreatePowerSourceNotification(_ =>
+			{
+				UpdateInformation();
+			});
+
+			CFRunLoop.Current.AddSource(powerSourceNotification, CFRunLoop.ModeDefault);
+
+			UpdateInformation();
+		}
+
+		public override void ViewWillDisappear()
+		{
+			CFRunLoop.Current.RemoveSource(powerSourceNotification, CFRunLoop.ModeDefault);
+
+			base.ViewWillDisappear();
+		}
+
+		private void UpdateInformation()
+		{
 			powerSourcesInfo = IOPowerSources.GetPowerSourcesInfo();
+			adapterDetails = IOPowerSources.GetExternalPowerAdapterDetails();
 
 			data.Clear();
 			data.AddRange(new[]
 			{
 				new PowerSourceGroup(powerSourcesInfo),
+				new PowerSourceGroup(adapterDetails),
 				new PowerSourceGroup(powerSourcesInfo.PowerSources)
 			});
 
 			sourcesOutline.ReloadData();
 			sourcesOutline.ExpandItem(null, true);
 			sourcesOutline.SelectRow(1, false);
-		}
-
-		public override void ViewWillDisappear()
-		{
-			base.ViewWillDisappear();
 		}
 
 		// Power Sources - Data Source

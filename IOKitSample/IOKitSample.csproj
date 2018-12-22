@@ -87,6 +87,7 @@
     <Compile Include="PowerSources\SystemPowerSourceItem.cs" />
     <Compile Include="PowerSources\SpecificPowerSourceItem.cs" />
     <Compile Include="PowerSources\PowerSourceGroup.cs" />
+    <Compile Include="PowerSources\AdaptersPowerSourceItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Main.storyboard" />

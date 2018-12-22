@@ -4,13 +4,17 @@ namespace IOKit
 {
 	public readonly struct IOPowerSourceBatteryHealth : IEquatable<IOPowerSourceBatteryHealth>
 	{
+		private const string kIOPSPoorValue = "Poor";
+		private const string kIOPSFairValue = "Fair";
+		private const string kIOPSGoodValue = "Good";
+
 		private readonly string health;
 
-		public static IOPowerSourceBatteryHealth Poor { get; } = new IOPowerSourceBatteryHealth("Poor");
+		public static IOPowerSourceBatteryHealth Poor { get; } = new IOPowerSourceBatteryHealth(kIOPSPoorValue);
 
-		public static IOPowerSourceBatteryHealth Fair { get; } = new IOPowerSourceBatteryHealth("Fair");
+		public static IOPowerSourceBatteryHealth Fair { get; } = new IOPowerSourceBatteryHealth(kIOPSFairValue);
 
-		public static IOPowerSourceBatteryHealth Good { get; } = new IOPowerSourceBatteryHealth("Good");
+		public static IOPowerSourceBatteryHealth Good { get; } = new IOPowerSourceBatteryHealth(kIOPSGoodValue);
 
 		IOPowerSourceBatteryHealth(string health)
 		{

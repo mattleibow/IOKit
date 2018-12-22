@@ -4,13 +4,17 @@ namespace IOKit
 {
 	public readonly struct IOPowerSourceProvidingType : IEquatable<IOPowerSourceProvidingType>
 	{
+		private const string kIOPMUPSPowerKey = "UPS Power";
+		private const string kIOPMBatteryPowerKey = "Battery Power";
+		private const string kIOPMACPowerKey = "AC Power";
+
 		private readonly string type;
 
-		public static IOPowerSourceProvidingType UPS { get; } = new IOPowerSourceProvidingType("UPS Power");
+		public static IOPowerSourceProvidingType UPS { get; } = new IOPowerSourceProvidingType(kIOPMUPSPowerKey);
 
-		public static IOPowerSourceProvidingType Battery { get; } = new IOPowerSourceProvidingType("Battery Power");
+		public static IOPowerSourceProvidingType Battery { get; } = new IOPowerSourceProvidingType(kIOPMBatteryPowerKey);
 
-		public static IOPowerSourceProvidingType AC { get; } = new IOPowerSourceProvidingType("AC Power");
+		public static IOPowerSourceProvidingType AC { get; } = new IOPowerSourceProvidingType(kIOPMACPowerKey);
 
 		IOPowerSourceProvidingType(string type)
 		{

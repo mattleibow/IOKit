@@ -52,7 +52,7 @@ namespace CoreFoundation
 
 		public IntPtr this[nint index] => CFArrayGetValueAtIndex(Handle, index);
 
-		public IEnumerator<CFArrayRef> GetEnumerator()
+		public IEnumerator<IntPtr> GetEnumerator()
 		{
 			var count = Count;
 			for (int i = 0; i < count; i++)

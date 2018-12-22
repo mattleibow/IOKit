@@ -1,11 +1,9 @@
-﻿using CFDictionaryRef = System.IntPtr;
-using CFTypeRef = System.IntPtr;
-using CFArrayRef = System.IntPtr;
-using ObjCRuntime;
-using System;
-using CoreFoundation;
-using System.Linq;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using CoreFoundation;
+using ObjCRuntime;
+using CFTypeRef = System.IntPtr;
 
 namespace IOKit
 {
@@ -73,7 +71,7 @@ namespace IOKit
 				throw new IOKitException();
 
 			var sourcesArray = new CFArray(sourcesRef, true);
-			foreach (CFTypeRef sourceRef in sourcesArray)
+			foreach (var sourceRef in sourcesArray)
 			{
 				var dicRef = IOPowerSources.IOPSGetPowerSourceDescription(Handle, sourceRef);
 				if (dicRef == default)

@@ -90,7 +90,7 @@ namespace CoreFoundation
 		public int GetInt32Value(string key)
 		{
 			var number = this[key];
-			if (number == IntPtr.Zero || !CFNumber.AsInt32(number, out var value))
+			if (number == default || !CFNumber.AsInt32(number, out var value))
 				throw new KeyNotFoundException($"Key '{key}' not found.");
 			return value;
 		}
@@ -98,7 +98,7 @@ namespace CoreFoundation
 		public long GetInt64Value(string key)
 		{
 			var number = this[key];
-			if (number == IntPtr.Zero || !CFNumber.AsInt64(number, out var value))
+			if (number == default || !CFNumber.AsInt64(number, out var value))
 				throw new KeyNotFoundException($"Key '{key}' not found.");
 			return value;
 		}
@@ -106,7 +106,7 @@ namespace CoreFoundation
 		public bool GetBooleanValue(string key)
 		{
 			var value = this[key];
-			if (value == IntPtr.Zero)
+			if (value == default)
 				throw new KeyNotFoundException($"Key '{key}' not found.");
 			return CFBoolean.GetValue(value);
 		}
@@ -114,7 +114,7 @@ namespace CoreFoundation
 		public string GetStringValue(string key)
 		{
 			var value = this[key];
-			if (value == IntPtr.Zero)
+			if (value == default)
 				throw new KeyNotFoundException($"Key '{key}' not found.");
 			using (var str = new CFString(value))
 			{
