@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CoreFoundation;
+using Foundation;
 using ObjCRuntime;
 using CFTypeRef = System.IntPtr;
 
@@ -59,7 +60,7 @@ namespace IOKit
 				var strRef = IOPowerSources.IOPSGetProvidingPowerSourceType(Handle);
 				using (var str = new CFString(strRef))
 				{
-					return IOPowerSourceProvidingType.Create(str);
+					return IOPowerSourceProvidingType.Create(str).Value;
 				}
 			}
 		}
@@ -70,14 +71,14 @@ namespace IOKit
 			if (sourcesRef == default)
 				throw new IOKitException();
 
-			var sourcesArray = new CFArray(sourcesRef, true);
+			var sourcesArray = NSArray.ArrayFromHandle<NSObject>(sourcesRef);
 			foreach (var sourceRef in sourcesArray)
 			{
-				var dicRef = IOPowerSources.IOPSGetPowerSourceDescription(Handle, sourceRef);
+				var dicRef = IOPowerSources.IOPSGetPowerSourceDescription(Handle, sourceRef.Handle);
 				if (dicRef == default)
 					throw new IOKitException();
 
-				yield return new IOPowerSource(new CFDictionary(dicRef, false));
+				yield return new IOPowerSource(Runtime.GetNSObject<NSDictionary>(dicRef, false));
 			}
 		}
 	}

@@ -53,15 +53,11 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CFBase.cs" />
-    <Compile Include="CFArray.cs" />
-    <Compile Include="CFDictionary.cs" />
     <Compile Include="IOPowerSources.cs" />
     <Compile Include="IOKitException.cs" />
     <Compile Include="IOPSNotify.cs" />
     <Compile Include="IOPowerSourceLowBatteryWarningLevel.cs" />
     <Compile Include="IOPSKeys.cs" />
-    <Compile Include="CFNumber.cs" />
-    <Compile Include="CFBoolean.cs" />
     <Compile Include="IOPowerSource.cs" />
     <Compile Include="IOPowerSourcesInfo.cs" />
     <Compile Include="IOPowerSourceProvidingType.cs" />

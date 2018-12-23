@@ -1,123 +1,100 @@
-﻿using System;
-using CoreFoundation;
+﻿using System.Linq;
+using Foundation;
 using ObjCRuntime;
 
 namespace IOKit
 {
-	public class IOPowerSource
+	public class IOPowerSource : DictionaryContainer
 	{
-		private const string kIOPSPowerSourceIDKey = "Power Source ID";
-		private const string kIOPSPowerSourceStateKey = "Power Source State";
-		private const string kIOPSCurrentCapacityKey = "Current Capacity";
-		private const string kIOPSMaxCapacityKey = "Max Capacity";
-		private const string kIOPSDesignCapacityKey = "DesignCapacity";
-		private const string kIOPSNominalCapacityKey = "Nominal Capacity";
-		private const string kIOPSTimeToEmptyKey = "Time to Empty";
-		private const string kIOPSTimeToFullChargeKey = "Time to Full Charge";
-		private const string kIOPSIsChargingKey = "Is Charging";
-		private const string kIOPSInternalFailureKey = "Internal Failure";
-		private const string kIOPSIsPresentKey = "Is Present";
-		private const string kIOPSVoltageKey = "Voltage";
-		private const string kIOPSCurrentKey = "Current";
-		private const string kIOPSTemperatureKey = "Temperature";
-		private const string kIOPSNameKey = "Name";
-		private const string kIOPSTypeKey = "Type";
-		private const string kIOPSTransportTypeKey = "Transport Type";
-		private const string kIOPSVendorIDKey = "Vendor ID";
-		private const string kIOPSProductIDKey = "Product ID";
-		private const string kIOPSVendorDataKey = "Vendor Specific Data";
-		private const string kIOPSBatteryHealthKey = "BatteryHealth";
-		private const string kIOPSBatteryHealthConditionKey = "BatteryHealthCondition";
-		private const string kIOPSBatteryFailureModesKey = "BatteryFailureModes";
-		private const string kIOPSHealthConfidenceKey = "HealthConfidence";
-		private const string kIOPSMaxErrKey = "MaxErr";
-		private const string kIOPSIsChargedKey = "Is Charged";
-		private const string kIOPSIsFinishingChargeKey = "Is Finishing Charge";
-		private const string kIOPSHardwareSerialNumberKey = "Hardware Serial Number";
+		private static readonly NSString kIOPSPowerSourceIDKey = (NSString)"Power Source ID";
+		private static readonly NSString kIOPSPowerSourceStateKey = (NSString)"Power Source State";
+		private static readonly NSString kIOPSCurrentCapacityKey = (NSString)"Current Capacity";
+		private static readonly NSString kIOPSMaxCapacityKey = (NSString)"Max Capacity";
+		private static readonly NSString kIOPSDesignCapacityKey = (NSString)"DesignCapacity";
+		private static readonly NSString kIOPSNominalCapacityKey = (NSString)"Nominal Capacity";
+		private static readonly NSString kIOPSTimeToEmptyKey = (NSString)"Time to Empty";
+		private static readonly NSString kIOPSTimeToFullChargeKey = (NSString)"Time to Full Charge";
+		private static readonly NSString kIOPSIsChargingKey = (NSString)"Is Charging";
+		private static readonly NSString kIOPSInternalFailureKey = (NSString)"Internal Failure";
+		private static readonly NSString kIOPSIsPresentKey = (NSString)"Is Present";
+		private static readonly NSString kIOPSVoltageKey = (NSString)"Voltage";
+		private static readonly NSString kIOPSCurrentKey = (NSString)"Current";
+		private static readonly NSString kIOPSTemperatureKey = (NSString)"Temperature";
+		private static readonly NSString kIOPSNameKey = (NSString)"Name";
+		private static readonly NSString kIOPSTypeKey = (NSString)"Type";
+		private static readonly NSString kIOPSTransportTypeKey = (NSString)"Transport Type";
+		private static readonly NSString kIOPSVendorIDKey = (NSString)"Vendor ID";
+		private static readonly NSString kIOPSProductIDKey = (NSString)"Product ID";
+		private static readonly NSString kIOPSVendorDataKey = (NSString)"Vendor Specific Data";
+		private static readonly NSString kIOPSBatteryHealthKey = (NSString)"BatteryHealth";
+		private static readonly NSString kIOPSBatteryHealthConditionKey = (NSString)"BatteryHealthCondition";
+		private static readonly NSString kIOPSBatteryFailureModesKey = (NSString)"BatteryFailureModes";
+		private static readonly NSString kIOPSHealthConfidenceKey = (NSString)"HealthConfidence";
+		private static readonly NSString kIOPSMaxErrKey = (NSString)"MaxErr";
+		private static readonly NSString kIOPSIsChargedKey = (NSString)"Is Charged";
+		private static readonly NSString kIOPSIsFinishingChargeKey = (NSString)"Is Finishing Charge";
+		private static readonly NSString kIOPSHardwareSerialNumberKey = (NSString)"Hardware Serial Number";
 
-		private readonly CFDictionary dictionary;
-
-		internal IOPowerSource(CFDictionary dictionary)
+		internal IOPowerSource(NSDictionary dictionary)
+			: base(dictionary)
 		{
-			this.dictionary = dictionary;
 		}
 
-		public int PowerSourceId => dictionary.GetInt32Value(kIOPSPowerSourceIDKey);
+		public int? PowerSourceId => GetInt32Value(kIOPSPowerSourceIDKey);
 
-		public IOPowerSourceState State => IOPowerSourceState.Create(dictionary.GetStringValue(kIOPSPowerSourceStateKey));
+		public IOPowerSourceState? State => IOPowerSourceState.Create(GetStringValue(kIOPSPowerSourceStateKey));
 
-		public int CurrentCapacity => dictionary.GetInt32Value(kIOPSCurrentCapacityKey);
+		public int? CurrentCapacity => GetInt32Value(kIOPSCurrentCapacityKey);
 
-		public int MaxCapacity => dictionary.GetInt32Value(kIOPSMaxCapacityKey);
+		public int? MaxCapacity => GetInt32Value(kIOPSMaxCapacityKey);
 
-		public int DesignCapacity => dictionary.GetInt32Value(kIOPSDesignCapacityKey);
+		public int? DesignCapacity => GetInt32Value(kIOPSDesignCapacityKey);
 
-		public int NominalCapacity => dictionary.GetInt32Value(kIOPSNominalCapacityKey);
+		public int? NominalCapacity => GetInt32Value(kIOPSNominalCapacityKey);
 
-		public int TimeToEmpty => dictionary.GetInt32Value(kIOPSTimeToEmptyKey);
+		public int? TimeToEmpty => GetInt32Value(kIOPSTimeToEmptyKey);
 
-		public int TimeToFullCharge => dictionary.GetInt32Value(kIOPSTimeToFullChargeKey);
+		public int? TimeToFullCharge => GetInt32Value(kIOPSTimeToFullChargeKey);
 
-		public bool IsCharging => dictionary.GetBooleanValue(kIOPSIsChargingKey);
+		public bool? IsCharging => GetBoolValue(kIOPSIsChargingKey);
 
-		public bool HasInternalFailure => dictionary.GetBooleanValue(kIOPSInternalFailureKey);
+		public bool? HasInternalFailure => GetBoolValue(kIOPSInternalFailureKey);
 
-		public bool IsPresent => dictionary.GetBooleanValue(kIOPSIsPresentKey);
+		public bool? IsPresent => GetBoolValue(kIOPSIsPresentKey);
 
-		public int Voltage => dictionary.GetInt32Value(kIOPSVoltageKey);
+		public int? Voltage => GetInt32Value(kIOPSVoltageKey);
 
-		public int Current => dictionary.GetInt32Value(kIOPSCurrentKey);
+		public int? Current => GetInt32Value(kIOPSCurrentKey);
 
-		public int Temperature => dictionary.GetInt32Value(kIOPSTemperatureKey);
+		public int? Temperature => GetInt32Value(kIOPSTemperatureKey);
 
-		public string Name => dictionary.GetStringValue(kIOPSNameKey);
+		public string Name => GetStringValue(kIOPSNameKey);
 
-		public IOPowerSourceType Type => IOPowerSourceType.Create(dictionary.GetStringValue(kIOPSTypeKey));
+		public IOPowerSourceType? Type => IOPowerSourceType.Create(GetStringValue(kIOPSTypeKey));
 
-		public IOPowerSourceTransportType TransportType => IOPowerSourceTransportType.Create(dictionary.GetStringValue(kIOPSTransportTypeKey));
+		public IOPowerSourceTransportType? TransportType => IOPowerSourceTransportType.Create(GetStringValue(kIOPSTransportTypeKey));
 
-		public int VendorId => dictionary.GetInt32Value(kIOPSVendorIDKey);
+		public int? VendorId => GetInt32Value(kIOPSVendorIDKey);
 
-		public int ProductId => dictionary.GetInt32Value(kIOPSProductIDKey);
+		public int? ProductId => GetInt32Value(kIOPSProductIDKey);
 
-		public IntPtr VendorData => dictionary[kIOPSVendorDataKey];
+		public NSDictionary VendorData => GetNSDictionary(kIOPSVendorDataKey);
 
-		public IOPowerSourceBatteryHealth BatteryHealth => IOPowerSourceBatteryHealth.Create(dictionary.GetStringValue(kIOPSBatteryHealthKey));
+		public IOPowerSourceBatteryHealth? BatteryHealth => IOPowerSourceBatteryHealth.Create(GetStringValue(kIOPSBatteryHealthKey));
 
-		public IOPowerSourceBatteryHealthCondition BatteryHealthCondition => IOPowerSourceBatteryHealthCondition.Create(dictionary.GetStringValue(kIOPSBatteryHealthConditionKey));
+		public IOPowerSourceBatteryHealthCondition? BatteryHealthCondition => IOPowerSourceBatteryHealthCondition.Create(GetStringValue(kIOPSBatteryHealthConditionKey));
 
-		public string[] BatteryFailureModes
-		{
-			get
-			{
-				var modesHandle = dictionary[kIOPSBatteryHealthConditionKey];
-				if (modesHandle == default)
-					return null;
-
-				using (var array = new CFArray(modesHandle, false))
-				{
-					var modes = new string[array.Count];
-					for (var i = 0; i < array.Count; i++)
-					{
-						using (var str = new CFString(array[i]))
-						{
-							modes[i] = str;
-						}
-					}
-					return modes;
-				}
-			}
-		}
+		public string[] BatteryFailureModes => GetArray<NSString>(kIOPSBatteryHealthConditionKey)?.Cast<string>()?.ToArray();
 
 		[Deprecated(PlatformName.MacOSX, 10, 6)]
-		public string HealthConfidence => dictionary.GetStringValue(kIOPSHealthConfidenceKey);
+		public string HealthConfidence => GetStringValue(kIOPSHealthConfidenceKey);
 
-		public int PercentageError => dictionary.GetInt32Value(kIOPSMaxErrKey);
+		public int? PercentageError => GetInt32Value(kIOPSMaxErrKey);
 
-		public bool IsCharged => dictionary.GetBooleanValue(kIOPSIsChargedKey);
+		public bool? IsCharged => GetBoolValue(kIOPSIsChargedKey);
 
-		public bool IsFinishingCharge => dictionary.GetBooleanValue(kIOPSIsFinishingChargeKey);
+		public bool? IsFinishingCharge => GetBoolValue(kIOPSIsFinishingChargeKey);
 
-		public string HardwareSerialNumber => dictionary.GetStringValue(kIOPSHardwareSerialNumberKey);
+		public string HardwareSerialNumber => GetStringValue(kIOPSHardwareSerialNumberKey);
 	}
 }

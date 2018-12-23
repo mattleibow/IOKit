@@ -7,40 +7,32 @@ namespace IOKit
 		private const string kIOPSCheckBatteryValue = "Check Battery";
 		private const string kIOPSPermanentFailureValue = "Permanent Battery Failure";
 
-		private readonly string condition;
+		private readonly string value;
 
 		public static IOPowerSourceBatteryHealthCondition CheckBattery { get; } = new IOPowerSourceBatteryHealthCondition(kIOPSCheckBatteryValue);
 
 		public static IOPowerSourceBatteryHealthCondition PermanentBatteryFailure { get; } = new IOPowerSourceBatteryHealthCondition(kIOPSPermanentFailureValue);
 
-		IOPowerSourceBatteryHealthCondition(string condition)
-		{
-			if (condition == null)
-				throw new ArgumentNullException(nameof(condition));
+		IOPowerSourceBatteryHealthCondition(string value) =>
+			this.value = value ?? throw new ArgumentNullException(nameof(value));
 
-			if (condition.Length == 0)
-				throw new ArgumentException(nameof(condition));
-
-			this.condition = condition;
-		}
-
-		public static IOPowerSourceBatteryHealthCondition Create(string condition) =>
-			new IOPowerSourceBatteryHealthCondition(condition);
+		public static IOPowerSourceBatteryHealthCondition? Create(string value) =>
+			value == null ? (IOPowerSourceBatteryHealthCondition?)null : new IOPowerSourceBatteryHealthCondition(value);
 
 		public bool Equals(IOPowerSourceBatteryHealthCondition other) =>
-			Equals(other.condition);
+			Equals(other.value);
 
 		internal bool Equals(string other) =>
-			string.Equals(condition, other, StringComparison.Ordinal);
+			string.Equals(value, other, StringComparison.Ordinal);
 
 		public override bool Equals(object obj) =>
 			obj is IOPowerSourceBatteryHealthCondition && Equals((IOPowerSourceBatteryHealthCondition)obj);
 
 		public override int GetHashCode() =>
-			condition == null ? 0 : condition.GetHashCode();
+			value?.GetHashCode() ?? 0;
 
 		public override string ToString() =>
-			condition ?? string.Empty;
+			value ?? string.Empty;
 
 		public static bool operator ==(IOPowerSourceBatteryHealthCondition left, IOPowerSourceBatteryHealthCondition right) =>
 			left.Equals(right);

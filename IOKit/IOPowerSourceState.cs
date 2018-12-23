@@ -8,7 +8,7 @@ namespace IOKit
 		private const string kIOPSACPowerValue = "AC Power";
 		private const string kIOPSBatteryPowerValue = "Battery Power";
 
-		private readonly string state;
+		private readonly string value;
 
 		public static IOPowerSourceState OffLine { get; } = new IOPowerSourceState(kIOPSOffLineValue);
 
@@ -16,34 +16,26 @@ namespace IOKit
 
 		public static IOPowerSourceState BatteryPower { get; } = new IOPowerSourceState(kIOPSBatteryPowerValue);
 
-		IOPowerSourceState(string state)
-		{
-			if (state == null)
-				throw new ArgumentNullException(nameof(state));
+		IOPowerSourceState(string value) =>
+			this.value = value ?? throw new ArgumentNullException(nameof(value));
 
-			if (state.Length == 0)
-				throw new ArgumentException(nameof(state));
-
-			this.state = state;
-		}
-
-		public static IOPowerSourceState Create(string state) =>
-			new IOPowerSourceState(state);
+		public static IOPowerSourceState? Create(string value) =>
+			value == null ? (IOPowerSourceState?)null : new IOPowerSourceState(value);
 
 		public bool Equals(IOPowerSourceState other) =>
-			Equals(other.state);
+			Equals(other.value);
 
 		internal bool Equals(string other) =>
-			string.Equals(state, other, StringComparison.Ordinal);
+			string.Equals(value, other, StringComparison.Ordinal);
 
 		public override bool Equals(object obj) =>
 			obj is IOPowerSourceState && Equals((IOPowerSourceState)obj);
 
 		public override int GetHashCode() =>
-			state == null ? 0 : state.GetHashCode();
+			value?.GetHashCode() ?? 0;
 
 		public override string ToString() =>
-			state ?? string.Empty;
+			value ?? string.Empty;
 
 		public static bool operator ==(IOPowerSourceState left, IOPowerSourceState right) =>
 			left.Equals(right);

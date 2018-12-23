@@ -8,7 +8,7 @@ namespace IOKit
 		private const string kIOPSFairValue = "Fair";
 		private const string kIOPSGoodValue = "Good";
 
-		private readonly string health;
+		private readonly string value;
 
 		public static IOPowerSourceBatteryHealth Poor { get; } = new IOPowerSourceBatteryHealth(kIOPSPoorValue);
 
@@ -16,34 +16,26 @@ namespace IOKit
 
 		public static IOPowerSourceBatteryHealth Good { get; } = new IOPowerSourceBatteryHealth(kIOPSGoodValue);
 
-		IOPowerSourceBatteryHealth(string health)
-		{
-			if (health == null)
-				throw new ArgumentNullException(nameof(health));
+		IOPowerSourceBatteryHealth(string value) =>
+			this.value = value ?? throw new ArgumentNullException(nameof(value));
 
-			if (health.Length == 0)
-				throw new ArgumentException(nameof(health));
-
-			this.health = health;
-		}
-
-		public static IOPowerSourceBatteryHealth Create(string health) =>
-			new IOPowerSourceBatteryHealth(health);
+		public static IOPowerSourceBatteryHealth? Create(string value) =>
+			value == null ? (IOPowerSourceBatteryHealth?)null : new IOPowerSourceBatteryHealth(value);
 
 		public bool Equals(IOPowerSourceBatteryHealth other) =>
-			Equals(other.health);
+			Equals(other.value);
 
 		internal bool Equals(string other) =>
-			string.Equals(health, other, StringComparison.Ordinal);
+			string.Equals(value, other, StringComparison.Ordinal);
 
 		public override bool Equals(object obj) =>
 			obj is IOPowerSourceBatteryHealth && Equals((IOPowerSourceBatteryHealth)obj);
 
 		public override int GetHashCode() =>
-			health == null ? 0 : health.GetHashCode();
+			value?.GetHashCode() ?? 0;
 
 		public override string ToString() =>
-			health ?? string.Empty;
+			value ?? string.Empty;
 
 		public static bool operator ==(IOPowerSourceBatteryHealth left, IOPowerSourceBatteryHealth right) =>
 			left.Equals(right);

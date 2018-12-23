@@ -8,6 +8,7 @@ using CFStringRef = System.IntPtr;
 using CFTimeInterval = System.Double;
 using CFTypeRef = System.IntPtr;
 using CFRunLoopSourceRef = System.IntPtr;
+using Foundation;
 
 namespace IOKit
 {
@@ -74,7 +75,7 @@ namespace IOKit
 			if (details == default)
 				return null;
 
-			return new IOPowerSourcesExternalPowerAdapterDetails(new CFDictionary(details, true));
+			return new IOPowerSourcesExternalPowerAdapterDetails(Runtime.GetNSObject<NSDictionary>(details, true));
 		}
 
 		private const string IOKitLibrary = "/System/Library/Frameworks/IOKit.framework/IOKit";

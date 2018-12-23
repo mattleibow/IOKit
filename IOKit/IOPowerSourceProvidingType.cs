@@ -8,7 +8,7 @@ namespace IOKit
 		private const string kIOPMBatteryPowerKey = "Battery Power";
 		private const string kIOPMACPowerKey = "AC Power";
 
-		private readonly string type;
+		private readonly string value;
 
 		public static IOPowerSourceProvidingType UPS { get; } = new IOPowerSourceProvidingType(kIOPMUPSPowerKey);
 
@@ -16,34 +16,26 @@ namespace IOKit
 
 		public static IOPowerSourceProvidingType AC { get; } = new IOPowerSourceProvidingType(kIOPMACPowerKey);
 
-		IOPowerSourceProvidingType(string type)
-		{
-			if (type == null)
-				throw new ArgumentNullException(nameof(type));
+		IOPowerSourceProvidingType(string value) =>
+			this.value = value ?? throw new ArgumentNullException(nameof(value));
 
-			if (type.Length == 0)
-				throw new ArgumentException(nameof(type));
-
-			this.type = type;
-		}
-
-		public static IOPowerSourceProvidingType Create(string type) =>
-		   new IOPowerSourceProvidingType(type);
+		public static IOPowerSourceProvidingType? Create(string value) =>
+			value == null ? (IOPowerSourceProvidingType?)null : new IOPowerSourceProvidingType(value);
 
 		public bool Equals(IOPowerSourceProvidingType other) =>
-			Equals(other.type);
+			Equals(other.value);
 
 		internal bool Equals(string other) =>
-			string.Equals(type, other, StringComparison.Ordinal);
+			string.Equals(value, other, StringComparison.Ordinal);
 
 		public override bool Equals(object obj) =>
 			obj is IOPowerSourceProvidingType && Equals((IOPowerSourceProvidingType)obj);
 
 		public override int GetHashCode() =>
-			type == null ? 0 : type.GetHashCode();
+			value?.GetHashCode() ?? 0;
 
 		public override string ToString() =>
-			type ?? string.Empty;
+			value ?? string.Empty;
 
 		public static bool operator ==(IOPowerSourceProvidingType left, IOPowerSourceProvidingType right) =>
 			left.Equals(right);
